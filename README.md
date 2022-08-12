@@ -83,14 +83,22 @@ Installation time varies based on the computer. Should not be longer than 30 min
 
 
 ## Demo
-human_correlation.R will generate the heatmap of genes highly expressed in both the splanchnic mesenchyme and CAFs compared 
-to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 
-And the heatmap of genes highly expressed in both the splanchnic mesenchyme and human pancreatic CAFs compared to human 
+**human_correlation.R** will generate heatmap of genes highly expressed in both the splanchnic mesenchyme and human pancreatic CAFs compared to human 
 pancreatic TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and human pancreatic TRFs 
 compared to human pancreatic CAFs (lower block). Spl, splanchnic; Meso, mesoderm; CAFs, cancer associated fibroblasts; 
 TRFs, tissue resident fibroblasts.
 
 
-## Instructions for use
 
+**mouse_analysis.R** will generate 1. the heatmap of genes highly expressed in both the splanchnic mesenchyme and CAFs compared 
+to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 
+And the
+
+
+## Instructions for use
+It is recommeded to run codes in Rstudio.
+Runing the code line by line :)
+
+## Contact Us
+Kun Fang: fangk@mcw.edu; Lu Han: hanl@musc.edu
 
