@@ -88,7 +88,7 @@ pancreatic TRFs (upper block), and genes highly expressed in both the splanchnic
 compared to human pancreatic CAFs (lower block). Spl, splanchnic; Meso, mesoderm; CAFs, cancer associated fibroblasts; 
 TRFs, tissue resident fibroblasts.
 
-<img src="https://github.com/KunFang93/" width="900">
+<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/Spl_Meos_human.PDAC.Normal_072922.png" width="900">
 
 **mouse_analysis.R** will generate 1. the heatmap of genes highly expressed in both the splanchnic mesenchyme and CAFs compared 
 to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 2. generate Dimplot for Eng.
