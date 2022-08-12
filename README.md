@@ -97,11 +97,12 @@ to TRFs (upper block), and genes highly expressed in both the splanchnic mesench
 *1*.
 <img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/twogroup_FCordered_072222.pdf" width="900">
 
-*2*.
-<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/twogroup_FCordered_072222.pdf" width="900">
 
-*3*.
-<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/twogroup_FCordered_072222.pdf" width="900">
+*2*.
+<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/slide14_071522.pdf" width="900">
+
+*4*.
+<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/slide13_071522.pdf" width="900">
 
 
 ## Instructions for use
