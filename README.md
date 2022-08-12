@@ -91,8 +91,9 @@ TRFs, tissue resident fibroblasts.
 
 
 **mouse_analysis.R** will generate 1. the heatmap of genes highly expressed in both the splanchnic mesenchyme and CAFs compared 
-to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 
-And the
+to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 2. generate Dimplot for Eng.
+3. Find DEGs of 6 vs 0,1,13 clusters  and 4.UMAPs for different subtypes of fibroblasts in between IcreT and KPFIcreT tissues 
+
 
 
 ## Instructions for use
