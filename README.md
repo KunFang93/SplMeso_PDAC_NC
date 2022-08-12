@@ -94,6 +94,14 @@ TRFs, tissue resident fibroblasts.
 to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 2. generate Dimplot for Eng.
 3. Find DEGs of 6 vs 0,1,13 clusters  and 4.UMAPs for different subtypes of fibroblasts in between IcreT and KPFIcreT tissues 
 
+*1*.
+<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/twogroup_FCordered_072222.pdf" width="900">
+
+*2*.
+<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/twogroup_FCordered_072222.pdf" width="900">
+
+*3*.
+<img src="https://github.com/KunFang93/SplMeso_PDAC_NC/blob/main/twogroup_FCordered_072222.pdf" width="900">
 
 
 ## Instructions for use
