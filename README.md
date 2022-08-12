@@ -78,7 +78,19 @@ loaded via a namespace (and not attached):
 
 ```
 ## Installation guide
-all dependent packages can be install with bioconductor[https://www.bioconductor.org] or install.packages() command
+All dependent packages can be install with [bioconductor](https://www.bioconductor.org) or install.packages() command
+Installation time varies based on the computer. Should not be longer than 30 mins. 
+
+
 ## Demo
+human_correlation.R will generate the heatmap of genes highly expressed in both the splanchnic mesenchyme and CAFs compared 
+to TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and TRFs compared to CAFs (lower block). 
+And the heatmap of genes highly expressed in both the splanchnic mesenchyme and human pancreatic CAFs compared to human 
+pancreatic TRFs (upper block), and genes highly expressed in both the splanchnic mesenchyme and human pancreatic TRFs 
+compared to human pancreatic CAFs (lower block). Spl, splanchnic; Meso, mesoderm; CAFs, cancer associated fibroblasts; 
+TRFs, tissue resident fibroblasts.
+
 
 ## Instructions for use
+
+
