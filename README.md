@@ -81,7 +81,7 @@ loaded via a namespace (and not attached):
 
 ```
 ## Installation guide
-All dependent packages can be install with [bioconductor](https://www.bioconductor.org) or install.packages() command
+All dependent packages can be install with [bioconductor](https://www.bioconductor.org) or install.packages() command.  
 Installation time varies based on the computer. Should not be longer than 30 mins. 
 
 
