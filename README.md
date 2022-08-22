@@ -115,5 +115,5 @@ All pics should be reproducible from the codes
 
 
 ## Contact Us
-Kun Fang: fangk@mcw.edu; Lu Han: hanl@musc.edu
+Kun Fang: kfang@mcw.edu; Lu Han: hanl@musc.edu
 
