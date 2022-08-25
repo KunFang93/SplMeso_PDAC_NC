@@ -1,5 +1,5 @@
 # The splanchnic mesenchyme is the tissue of origin for fibroblasts in the pancreas during homeostasis and tumorigenesis
-Kun Part of scRNA-seq analysis codes for the paper
+scRNA-seq analysis codes for the paper
 
 ## Data
 Seurat oject used in codes should be found under GSE200903, [FibroXplorer](https://www.fibroxplorer.com) and [Tabula Sapiens](https://figshare.com/projects/Tabula_Sapiens/100973)
@@ -115,5 +115,5 @@ All pics should be reproducible from the codes
 
 
 ## Contact Us
-Kun Fang: kfang@mcw.edu; Lu Han: hanl@musc.edu
+Michael Zimmermann:mtzimmermann@mcw.edu; Kun Fang: kfang@mcw.edu; Lu Han: hanl@musc.edu
 
