@@ -31,8 +31,8 @@ str(g)
 
 ## ----------------------- -
 ## Combine into one fibroblast object -
-cols <- c('red','gold','lawngreen', "gray", "black", "deepskyblue", "darkslategray3")
-load('merged_fibroblast_dataset.v4.RData')
+load('merged_fibroblast_dataset.v4.RData') # or, load('new_combined_cluster_FibroSamples_2022-01-14.RData'), from GSE200903
+
 merged.f2$CellGroup <- plyr::mapvalues(merged.f2$CellGroup,
                                        from = c("fibroblast_PDAC.fibroblasts", "fibroblast_normal.fibroblasts"),
                                        to   = c('PDAC Fibroblasts'           , 'Normal Fibroblasts'))
