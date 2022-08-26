@@ -5,11 +5,13 @@ This code describes how we compared data from the current study to data from pre
 ---
 
 TabulaSapiens data was downloaded and converted into Seurat objects
+
     SeuratDisk::Convert("TS_Pancreas.h5ad", "TS_Pancreas.h5seurat")
     ts.panc <- LoadH5Seurat("TS_Pancreas.h5seurat", misc = FALSE)
-    ts.panc.fibro <- subset(ts.panc, subset=(cell_ontology_class %in%                                    c("pancreatic stellate cell", "fibroblast")))
+    ts.panc.fibro <- subset(ts.panc, subset=(cell_ontology_class %in% c("pancreatic stellate cell", "fibroblast")))
     save("ts.panc.fibro", file = 'tabula_sapiens_seurat.panc.fibro.RData')
-The above RData file was then used here.
+
+The above RData file was then used herein.
 
 ---
 
