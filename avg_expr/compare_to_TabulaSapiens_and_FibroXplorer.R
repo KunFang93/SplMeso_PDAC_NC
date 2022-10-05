@@ -9,12 +9,74 @@ require(fgsea)
 require(viridis)
 require(ComplexHeatmap)
 
+## ----------------------- -
+## UMAPs and tdTomato DimPlot
+# load('seurat_anaylsis_combined_clusters_210827.RData') # original dataset; 8 samples
+load('new_combined_cluster_8samples_2022-01-14.RData') # re-processed; rescued cells
+# load('new_combined_cluster_FibroSamples_2022-01-14.RData') # subsetted to only the 4 fibroblast samples
 
+DefaultAssay(combined_cluster) <- "RNA"
+DimPlot(combined_cluster, reduction = "umap", group.by="stim", label = FALSE)
+DimPlot(combined_cluster, reduction = "umap", group.by = "integrated_snn_res.0.5", label = TRUE, repel = TRUE)
+
+## Show tdTomato expression
+opts <- list( scale_colour_gradientn(colours = c(rep(rgb(.7,.7,.7,.3), 1),
+                                                 rep('firebrick'     , 3)) ),
+              theme(axis.title = element_text(size=8, face="plain"),
+                    plot.title = element_text(size=8, face="plain")) )
+
+# FeaturePlot(combined_cluster, features = "tdTomato", order = TRUE, pt.size=0.3) & opts # for 2021-08-27 dataset
+FeaturePlot(combined_cluster, features = "Raw_tdTomato.v2", order = TRUE, pt.size=0.3) & opts # for 2022-01-14 dataset
+
+## Show simplified sample coloring
+u <- combined_cluster@reductions$umap@cell.embeddings %>% 
+  as.data.frame() %>% cbind(sample = combined_cluster@meta.data$stim) %>%
+  separate(., "sample", "_", into = c("type","orig","time"), remove = FALSE)
+
+han_gray <- '#5b5c5e'
+han_red  <- '#ec2028'
+sample_colors <- c("epithelial_normal_day4rep1" = han_gray, "epithelial_normal_day4rep2" = han_gray,
+                   "epithelial_PDAC_day2"       = han_gray, "epithelial_PDAC_day3"       = han_gray,
+                   "fibroblast_normal_day4rep1" = han_red , "fibroblast_normal_day4rep2" = han_red,
+                   "fibroblast_PDAC_day2"       = han_red , "fibroblast_PDAC_day3"       = han_red  )
+ggplot(u, aes(x=UMAP_1, y=UMAP_2, color=sample)) + geom_point(size=0.3, alpha=1) +
+  scale_color_manual(values=sample_colors) +
+  theme_bw() + coord_fixed(ratio = 1) + facet_grid(rows=vars(type), cols=vars(orig))
+
+
+## ----------------------- -
+## Combine into one fibroblast object -
+
+##
+# load('new_combined_cluster_FibroSamples_2022-01-14.RData') # from GSE200903
+
+
+## 
+# load('merged_fibroblast_dataset.v4.RData') # concordant wiht the 2022-01-14 dataset, but re-integrated with fibro only
+# merged.f2$CellGroup <- plyr::mapvalues(merged.f2$CellGroup,
+#                                        from = c("fibroblast_PDAC.fibroblasts", "fibroblast_normal.fibroblasts"),
+#                                        to   = c('PDAC Fibroblasts'           , 'Normal Fibroblasts'))
+
+##
+load('seurat_anaylsis_combined_clusters_210827.RData') # original dataset; 8 samples
+merged.f2 <- subset(combined_cluster,
+                    subset=(cluster_name %in% c('inflammatory fibroblasts','myofibroblasts')) &
+                           (stim         %in% c('fibroblast_normal_day4rep1','fibroblast_normal_day4rep2',
+                                                'fibroblast_PDAC_day2', 'fibroblast_PDAC_day3')) )
+merged.f2$CellGroup <- plyr::mapvalues(merged.f2$stim,
+                                       from = c("fibroblast_PDAC_day2", 'fibroblast_PDAC_day3',
+                                                "fibroblast_normal_day4rep1", "fibroblast_normal_day4rep2"),
+                                       to   = c('PDAC Fibroblasts'    ,'PDAC Fibroblasts'     ,
+                                                'Normal Fibroblasts'        , 'Normal Fibroblasts'))
+
+
+## ----------------------- -
 ## Lu's embryonic data -
 E9_markers <- read_tsv("E9.5_embryo/Markers_All_Clusters.txt",
-                       col_names = c('rowname','p_val','avg_log2FC','pct.1','pct.2','p_val_adj','cluster','gene'), skip = 1)
+                       col_names = c('rowname','p_val','avg_log2FC','pct.1','pct.2',
+                                     'p_val_adj','cluster','gene'), skip = 1)
 head(E9_markers)
-tapply(E9_markers$gene, E9_markers$cluster, function(x){vt(x, rownames(fibro))})
+# tapply(E9_markers$gene, E9_markers$cluster, function(x){vt(x, rownames(fibro))})
 
 ## read sc data
 TotalCells_E9.5_Updated <- readRDS("E9.5_embryo/TotalCells_E9.5_Updated.rds")
@@ -23,19 +85,11 @@ lu.meso <- subset(TotalCells_E9.5_Updated, subset=LineageAnnotations %in% c('Car
 lu.meso@meta.data$LineageAnnotations <- lu.meso@meta.data$LineageAnnotations %>% droplevels
 table(lu.meso@meta.data$LineageAnnotations)
 
-message('intersection of genes from previous study and the current study:')
-vt(rownames(lu.meso), rownames(fibro))
-g <- intersect(rownames(lu.meso), rownames(fibro))
-str(g)
+# message('intersection of genes from previous study and the current study:')
+# vt(rownames(lu.meso), rownames(fibro))
+# g <- intersect(rownames(lu.meso), rownames(fibro))
+# str(g)
 
-
-## ----------------------- -
-## Combine into one fibroblast object -
-load('merged_fibroblast_dataset.v4.RData') # or, load('new_combined_cluster_FibroSamples_2022-01-14.RData'), from GSE200903
-
-merged.f2$CellGroup <- plyr::mapvalues(merged.f2$CellGroup,
-                                       from = c("fibroblast_PDAC.fibroblasts", "fibroblast_normal.fibroblasts"),
-                                       to   = c('PDAC Fibroblasts'           , 'Normal Fibroblasts'))
 
 ## ------------------------------------------------- - 
 ## Tabula Sapiens pancreas fibroblasts/stellate ----
@@ -86,7 +140,8 @@ col_z   = circlize::colorRamp2(c(-2          , 0      , 2    ),
                                c("dodgerblue", "white", "darkred"))
 
 ## FC heatmap, 2 columns sorted by PDAC level
-mat.2 <- as.matrix(a$RNA[ rownames(deg), c(4,5) ])
+mat.2 <- as.matrix(a$RNA[ rownames(deg), ])
+# mat.2 <- as.matrix(a$RNA[ rownames(deg), c(4,5) ])
 all(rownames(mat.2) == rownames(deg))
 
 Heatmap(mat.2 %>% plyr::mapvalues(., 0, 1e-6) %>% apply(., 2, log2),
@@ -156,7 +211,6 @@ fxts <- base::merge(fx.hc, ts.a$RNA, by=0, all=TRUE)
 colnames(fxts) <- c("gene","fx","ts")
 fxts.m <- homologene::homologene(fxts$gene, inTax = 9606, outTax = 10090)
 
-
 ##
 fx.i <- match( rownames(deg), fx.m$Row.names )
 all(rownames(deg) == fx.m$Row.names[fx.i], na.rm = TRUE)
@@ -198,4 +252,61 @@ cor( cbind(a$RNA[,4] %>% log2, # normal
            a$RNA[,5] %>% log2, # pdac
            fx.m[ match( rownames(a$RNA), fx.m$Row.names ), 2:4] %>% as.matrix
            ), use="complete.obs", method = "spearman") %>% round(.,2)
+
+##
+##
+e9i <- 'Spl_Meso'
+E9_markers$gene[E9_markers$cluster == e9i] %in% fxts.m$`10090` %>% table
+
+fxts.e9i <- fxts[ fxts$gene %in% fxts.m$`9606`[fxts.m$`10090` %in% E9_markers$gene[E9_markers$cluster == e9i]], ]
+i <- match(fxts.e9i$gene, fxts.m$`9606`)
+all( fxts.m$`9606`[i] == fxts.e9i$gene )
+fxts.e9i$gene.mouse <- fxts.m$`10090`[i]
+
+fxts.e9i$gene.mouse %in% rownames(a$RNA) %>% table
+fxts.e9i <- fxts.e9i[ fxts.e9i$gene.mouse %in% rownames(a$RNA), ]
+colnames(fxts.e9i)[2:3] <- c("Tabula Sapiens\nNormal Fibroblasts", "FibroXplorer\nhPDAC")
+# str(fxts.e9i)
+
+roh <- (fxts.e9i[, 3] / fxts.e9i[, 2]) %>% plyr::mapvalues(., c(NaN, NA, Inf, -Inf), c(0, 0, 8, -8)) %>% log2
+
+##
+mat.ts <- as.matrix(a$RNA[ fxts.e9i$gene.mouse, ])
+# mat.ts <- as.matrix(a$RNA[ fxts.e9i$gene.mouse, c(4,5) ])
+mat.ts.rat <- log2(mat.ts[, 2] / mat.ts[, 1]) %>% matrix(., ncol = 1) %>% set_colnames(., c("log2ratio"))
+
+##
+ri <- order(mat.ts.rat, decreasing = TRUE)
+Heatmap(mat.ts %>% plyr::mapvalues(., 0, 1e-6) %>% apply(., 2, log2) %>% scale,
+        show_row_names = FALSE, name = "Z(log2 Gene\nExpression)", column_title = str_interp("${e9i} Genes"),
+        row_order  = ri, col = col_z, column_order = c(2,1), border = TRUE) +
+  Heatmap(mat.ts.rat,
+          show_row_names = FALSE, name = "log2ratio\n(PDAC / Normal)",
+          row_order  = ri, col = col_02, border = TRUE) +
+  Heatmap(roh,
+          show_row_names = FALSE, name = "log2ratio\n(TabulaSapiens\n / FibroXplorer)",
+          row_order  = ri, col = col_02, border = TRUE) +
+  Heatmap(fxts.e9i[, 2:3] %>% as.matrix %>% plyr::mapvalues(., 0, 1e-6) %>% apply(., 2, log2) %>% scale,
+          show_row_names = FALSE, name = "Z(log2 Gene\nExpression)", column_title = str_interp("${e9i} Genes"),
+          row_order  = ri, col = col_z, column_order = c(2,1), border = TRUE)
+
+cor( cbind(mat.ts, 
+           fxts.e9i[, 2:3]
+           ), use="complete.obs", method = "spearman") %>% round(.,2) %>% print
+
+
+##
+ri <- order(roh, decreasing = TRUE)
+Heatmap(mat.ts %>% plyr::mapvalues(., 0, 1e-6) %>% apply(., 2, log2) %>% scale,
+        show_row_names = FALSE, name = "Z(log2 Gene\nExpression)", column_title = str_interp("${e9i} Genes"),
+        row_order  = ri, col = col_z, column_order = c(2,1), border = TRUE) +
+  Heatmap(mat.ts.rat,
+          show_row_names = FALSE, name = "log2ratio\n(PDAC / Normal)",
+          row_order  = ri, col = col_02, border = TRUE) +
+  Heatmap(roh,
+          show_row_names = FALSE, name = "log2ratio\n(TabulaSapiens\n / FibroXplorer)",
+          row_order  = ri, col = col_02, border = TRUE) +
+  Heatmap(fxts.e9i[, 2:3] %>% as.matrix %>% plyr::mapvalues(., 0, 1e-6) %>% apply(., 2, log2) %>% scale,
+          show_row_names = FALSE, name = "Z(log2 Gene\nExpression)", column_title = str_interp("${e9i} Genes"),
+          row_order  = ri, col = col_z, column_order = c(2,1), border = TRUE)
 
